@@ -1,0 +1,89 @@
+<odoo>
+	<data noupdate="0">
+		<record id="iti_student_tree_view" model="ir.ui.view">
+			<field name="name">ITI Student Tree View</field>
+			<field name="model">iti.student</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="age" />
+					<field name="accepted" />
+				</tree>
+			</field>
+		</record>
+		<record id="iti_student_form_view" model="ir.ui.view">
+			<field name="name">ITI Student Form View</field>
+			<field name="model">iti.student</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<!-- Button as menuitem -->
+						<!-- <button name="%(iti_tracks_action)d" type="action" string="Tracks" /> -->
+						<!-- Button as menuitem -->
+						<button name="change_state" type="object" attrs="{'invisible':[('student_state','!=','nw')]}" string="Pass First" />
+						<button name="change_state" type="object" attrs="{'invisible':[('student_state','!=','ps1')]}" string="Pass Second" />
+						<button name="reset_state" type="object" attrs="{'invisible':['|', ('student_state','=','nw'),('student_state','=','ps1')]}" string="Set to new" />
+						<!-- <field name="state" widget="statusbar" /> -->
+						<field name="student_state" widget="statusbar" statusbar_visible="nw,ps1,ps2,ac,r" />
+						<!-- <field name="state" widget="statusbar" statusbar_visible="nw,ps1,ps2,ac,r" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}' /> -->
+
+					</header>
+					<sheet>
+						<group>
+							<group string="Details">
+								<field name="name" />
+								<field name="age" />
+								<field name="accepted" />
+								<!-- to cnacel onchange effect in another view for example -->
+								<!-- <field name="accepted"  onchange="0"/> -->
+								<field name="birth_date" />
+								<field name="salary" />
+								<field name="tax" readonly="True" force_save='True' />
+								<field name="computed_tax" />
+								<field name="gender" groups="iti.iti_manager_group" />
+								<field name="military_certificate" attrs="{
+                                'invisible':[ ('gender','=','f')],
+                                'required':[ ('gender','=','m')],
+                                'readonly':[ ('accepted','=',True)],
+								}" />
+							</group>
+							<group string="Additional Details">
+								<field name="cv" />
+								<field name="image" widget="image" />
+								<field name="registration_at" />
+								<field name="track_id" domain="[('open','=',True)]" />
+								<field name="track_open" />
+								<field name="skills_ids" />
+							</group>
+						</group>
+						<notebook>
+							<page string="Info">
+								<field name="info" />
+							</page>
+							<page string="Bio">
+								<field name="bio" />
+							</page>
+							<page string="Log">
+								<field name="log_history_ids">
+									<tree>
+										<field name="create_uid" />
+										<field name="create_date" />
+										<field name="description" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="iti_students_action" model="ir.actions.act_window">
+			<field name="name">Students</field>
+			<field name="res_model">iti.student</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem id="iti_root_menu" name="ITI" />
+		<menuitem id="iti_data_menu" name="Data" parent="iti_root_menu" />
+		<menuitem id="iti_students_menu" name="Students" parent="iti_data_menu" action="iti_students_action" />
+	</data>
+</odoo>

@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="hr_employee_form_view_inherit" model="ir.ui.view">
+            <field name="name">Hr Employee National ID</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="arch" type="xml">
+                <!-- <field name="mobile_phone" position="replace"></field> -->
+                <field name="coach_id" position="attributes">
+                    <attribute name="required">True</attribute>
+                </field>
+                <field name="coach_id" position="after">
+                    <field name="national_id_number" />
+                </field>
+                <!-- <xpath expr="/form/sheet/group/group/field[@name='coach_id']" position="">
+                <xpath expr="//field[@name='coach_id']" position=""> -->
+            </field>
+        </record>
+    </data>
+</odoo>
+
+    

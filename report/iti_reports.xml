@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="iti_student_card_report" model="ir.actions.report">
+            <field name="name">Students Card</field>
+            <field name="model">iti.student</field>
+            <!-- <field name="group_id" eval="[(4, ref('iti_employee_group'))]" /> -->
+            <field name="report_name">iti.iti_student_card_template</field>
+            <field name="binding_model_id" ref="model_iti_student" />
+        </record>
+
+    </data>
+</odoo>

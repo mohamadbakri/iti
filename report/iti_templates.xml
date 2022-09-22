@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <template id="iti_student_card_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="student">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h1>
+                                <span t-out="student.name" />
+                            </h1>
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td>Age</td>
+                                        <t t-if="student.accepted">
+                                            <p>Accepted</p>
+                                        </t>
+                                        <t t-if="not student.accepted">
+                                            <p>Not Accepted</p>
+                                        </t>
+                                        <td>
+                                            <span t-out="student.age" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

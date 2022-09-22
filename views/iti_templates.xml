@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <template id="list_students_template" name="template_name">
+            <t t-call="web.external_layout">
+                <div class="page">
+
+                    <h1>Hello World!</h1>
+                    <t t-foreach="students" t-as="s">
+                        <p>
+                            <span t-out="s.name" />
+                        </p>
+                    </t>
+                </div>
+            </t>
+
+        </template>
+    </data>
+
+</odoo>

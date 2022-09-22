@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="load_students_view_form" model="ir.ui.view">
+            <field name="name">load_students_view_form</field>
+            <field name="model">iti.load.students</field>
+            <field name="arch" type="xml">
+                <form string="load_students_form">
+                    <group>
+                        <field name="date"></field>
+                    </group>
+                    <button name="load_students" type="object" string="Load Students" />
+                </form>
+            </field>
+        </record>
+        <record id="load_students_action" model="ir.actions.act_window">
+            <field name="name">Load Students</field>
+            <field name="res_model">iti.load.students</field>
+            <field name="view_mode">form</field>
+            <!-- target new load form as pop-up -->
+            <field name="target">new</field>
+        </record>
+        <menuitem id="load_students" name="Load Students" parent="iti_root_menu" action="load_students_action" />
+    </data>
+</odoo>

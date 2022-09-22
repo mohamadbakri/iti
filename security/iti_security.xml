@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <record id="iti_groups_category" model="ir.module.category">
+            <field name="name">ITI</field>
+        </record>
+
+        <!-- username:userone  pw:123 -->
+        <record id="iti_employee_group" model="res.groups">
+            <field name="name">Employee</field>
+            <field name="category_id" ref="iti_groups_category" />
+        </record>
+
+
+        <record id="iti_manager_group" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="iti_groups_category" />
+            <field name="implied_ids" eval="[(4, ref('iti_employee_group'))]" />
+        </record>
+
+        <!-- Group Specific or  Custom Rule -->
+        <record id="iti_see_own_records" model="ir.rule">
+            <field name="name">See own records</field>
+            <field name="model_id" ref="model_iti_student" />
+            <field name="groups" eval="[(4, ref('iti_employee_group'))]" />
+            <field name="domain_force">[("create_uid", "=", user.id)]</field>
+        </record>
+
+        <record id="iti_see_all_records" model="ir.rule">
+            <field name="name">See all records</field>
+            <field name="model_id" ref="model_iti_student" />
+            <field name="groups" eval="[(4, ref('iti_employee_group'))]" />
+            <field name="domain_force">[]</field>
+        </record>
+
+        <!-- What Odoo do to evaluate user rights
+         Global_Rule1 AND Global_Rule2 AND (custom_rul1 OR custom_rule2)
+        -->
+
+        <!-- Rule with no group called Global Group applied for all gorups -->
+        <!-- <record id="iti_see_accepted_records" model="ir.rule">
+        <field namaze="nqame">See accepted records</field>
+            <field name="model_id" ref="model_iti_student" />
+            <field name="domain_force">[("accepted", "=", True)]</field>
+        </record>
+ -->
+        <!-- 
+ How Rules Applied
+- user1 created the record
+- record is accepted
+- record has 20 years old
+
+- iti_employee_group : create_uid = user.id
+- iti_manager_group : []
+- global_rule1 : age >= 20
+- global_rule2 : accepted = True
+
+user3 is logged in (manager)
+[(create_uid = user.id) OR []  ]  AND  (age >= 20) AND (accepted = True)
+ (         False        OR True)  AND     True     AND       True         ===> True
+ -->
+
+        <!-- Setting Access Rights throuhgh XML  -->
+        <!-- <record id="iti_employee_student" model="ir.model.access">
+            <field name="name">ITI_Employee_Student</field>
+            <field name="model_id"></field>
+        </record> -->
+
+    </data>
+</odoo>
